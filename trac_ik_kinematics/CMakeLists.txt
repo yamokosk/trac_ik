@@ -1,27 +1,15 @@
 cmake_minimum_required(VERSION 3.10.2)
 project(trac_ik_kinematics)
 
-# Common cmake code applied to all moveit packages
-find_package(moveit_common REQUIRED)
-moveit_package()
-
-find_package(ament_cmake REQUIRED)
-find_package(Eigen3 REQUIRED)
-find_package(orocos_kdl REQUIRED)
-find_package(tf2_kdl REQUIRED)
-find_package(kdl_parser REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(random_numbers REQUIRED)
-find_package(class_loader REQUIRED)
-find_package(pluginlib REQUIRED)
-find_package(moveit_core REQUIRED)
-find_package(moveit_ros_planning REQUIRED)
-find_package(moveit_msgs REQUIRED)
-find_package(trac_ik_lib REQUIRED)
-find_package(NLopt REQUIRED)
-
-# Finds Boost Components
-include(ConfigExtras.cmake)
+find_package(rclcpp)
+find_package(moveit_core)
+find_package(orocos_kdl)
+find_package(kdl_parser)
+find_package(tf2_kdl)
+find_package(pluginlib)
+find_package(trac_ik_lib)
+find_package(geometry_msgs)
+find_package(moveit_msgs)
 
 set(THIS_PACKAGE_INCLUDE_DIRS
   trac_ik_kinematics_plugin/include
@@ -32,13 +20,18 @@ set(THIS_PACKAGE_LIBRARIES
 )
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
-  pluginlib
   moveit_core
-  moveit_ros_planning
-  Boost
+  orocos_kdl
+  kdl_parser
+  tf2_kdl
+  rclcpp
+  pluginlib
+  trac_ik_lib
+  geometry_msgs
+  moveit_msgs
 )
 
-pluginlib_export_plugin_description_file(moveit_core trac_ik_kinematics_plugin_description.xml)
+pluginlib_export_plugin_description_file(moveit_core  trac_ik_kinematics_plugin_description.xml)
 
 include_directories(${THIS_PACKAGE_INCLUDE_DIRS})
 
@@ -72,4 +65,4 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package(CONFIG_EXTRAS ConfigExtras.cmake)
+ament_package()

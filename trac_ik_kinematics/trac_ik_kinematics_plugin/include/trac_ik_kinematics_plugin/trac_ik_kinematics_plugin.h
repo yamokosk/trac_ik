@@ -30,9 +30,10 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include <cfloat>
+
 // ROS
 #include <rclcpp/rclcpp.hpp>
-#include <random_numbers/random_numbers.h>
 
 // ROS msgs
 #include <geometry_msgs/msg/pose_stamped.hpp>
@@ -43,7 +44,6 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // MoveIt
 #include <moveit/kinematics_base/kinematics_base.h>
-// #include <moveit/kdl_kinematics_plugin/joint_mimic.hpp>
 #include <moveit/robot_model/robot_model.h>
 #include <moveit/robot_state/robot_state.h>
 
@@ -52,14 +52,11 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <kdl/chainfksolver.hpp>
 #include <kdl/chainiksolver.hpp>
 
-#include <cfloat>
 
 namespace trac_ik_kinematics_plugin
 {
   class TRAC_IKKinematicsPlugin : public kinematics::KinematicsBase
   {
-
-
   public:
     /** @class
    *  @brief Interface for an TRAC-IK kinematics plugin
@@ -173,21 +170,24 @@ namespace trac_ik_kinematics_plugin
                        const std::vector<double> &joint_angles,
                        std::vector<geometry_msgs::msg::Pose> &poses) const override;
 
-    bool initialize(const rclcpp::Node::SharedPtr &node, const moveit::core::RobotModel &robot_model,
-                    const std::string &group_name, const std::string &base_frame,
-                    const std::vector<std::string> &tip_frames, double search_discretization) override;
-
     /**
-   * @brief  Return all the joint names in the order they are used internally
-   */
+     * @brief  Return all the joint names in the order they are used internally
+     */
     const std::vector<std::string> &getJointNames() const override;
 
     /**
-   * @brief  Return all the link names in the order they are represented internally
-   */
+     * @brief  Return all the link names in the order they are represented internally
+     */
     const std::vector<std::string> &getLinkNames() const override;
 
   private:
+    bool initialize(const rclcpp::Node::SharedPtr &node,
+                    const moveit::core::RobotModel &robot_model,
+                    const std::string &group_name, 
+                    const std::string &base_frame,
+                    const std::vector<std::string> &tip_frames, 
+                    double search_discretization) override;
+
     int getKDLSegmentIndex(const std::string &name) const;
 
     bool initialized_;  ///< Internal variable that indicates whether solver is configured and ready
@@ -209,11 +209,11 @@ namespace trac_ik_kinematics_plugin
 
     uint num_joints_;
 
-    KDL::Chain chain;
+    // KDL::Chain chain;
     bool position_ik_;
 
     KDL::JntArray joint_min, joint_max;
 
-    std::string solve_type;
+    TRAC_IK::SolveType solve_type_;
   }; // end class
 }

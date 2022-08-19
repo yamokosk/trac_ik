@@ -8,21 +8,16 @@
   <license>BSD</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <build_depend>moveit_common</build_depend>
 
   <depend>moveit_core</depend>
-  <depend>class_loader</depend>
-  <depend>pluginlib</depend>
-  <depend>eigen</depend>
-  <depend>tf2</depend>
-  <depend>tf2_kdl</depend>
   <depend>orocos_kdl</depend>
-  <depend>moveit_msgs</depend>
+  <depend>kdl_parser</depend>
+  <depend>tf2_kdl</depend>
+  <depend>rclcpp</depend>
+  <depend>pluginlib</depend>
   <depend>trac_ik_lib</depend>
-  <depend>NLopt</depend>
-
-  <exec_depend>urdfdom</exec_depend>
-  <exec_depend>python-lxml</exec_depend>
+  <depend>geometry_msgs</depend>
+  <depend>moveit_msgs</depend>
 
   <export>
     <build_type>ament_cmake</build_type>
